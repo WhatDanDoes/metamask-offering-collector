@@ -23,7 +23,7 @@ describe('auth', () => {
     });
   });
 
-  describe('POST /introduce', () => {
+  describe('GET /introduce', () => {
 
     let signingMessage;
     beforeEach(async () => {
@@ -34,8 +34,8 @@ describe('auth', () => {
       const session = request(app);
       expect(session.cookies.length).toEqual(0);
       session
-        .post('/auth/introduce')
-        .send({ publicAddress: _publicAddress })
+        .get('/auth/introduce')
+        .query({ publicAddress: _publicAddress })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(201)
@@ -74,11 +74,11 @@ describe('auth', () => {
       const session = request(app);
       expect(session.cookies.length).toEqual(0);
       session
-        .post('/auth/introduce')
-        .send({ publicAddress: _publicAddress })
+        .get('/auth/introduce')
+        .query({ publicAddress: _publicAddress })
         .set('Accept', 'text/html')
         .expect('Content-Type', /html/)
-        .expect(201)
+        .expect(200)
         .end((err, res) => {
           if (err) return done.fail(err);
           expect(session.cookies.length).toEqual(1);
@@ -114,8 +114,8 @@ describe('auth', () => {
     it('sets maximum cookie age to one hour', done => {
       const session = request(app);
       session
-        .post('/auth/introduce')
-        .send({ publicAddress: _publicAddress })
+        .get('/auth/introduce')
+        .query({ publicAddress: _publicAddress })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(201)
@@ -135,8 +135,8 @@ describe('auth', () => {
 
           it('returns a public address and message with nonce for signing', done => {
             request(app)
-              .post('/auth/introduce')
-              .send({ publicAddress: _publicAddress })
+              .get('/auth/introduce')
+              .query({ publicAddress: _publicAddress })
               .set('Accept', 'application/json')
               .expect('Content-Type', /json/)
               .expect(201)
@@ -156,8 +156,8 @@ describe('auth', () => {
               expect(agents.length).toEqual(0);
 
               request(app)
-                .post('/auth/introduce')
-                .send({ publicAddress: _publicAddress })
+                .get('/auth/introduce')
+                .query({ publicAddress: _publicAddress })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(201)
@@ -186,10 +186,10 @@ describe('auth', () => {
 
           it('renders an instruction page with form-embedded public address', done => {
             request(app)
-              .post('/auth/introduce')
-              .send({ publicAddress: _publicAddress })
+              .get('/auth/introduce')
+              .query({ publicAddress: _publicAddress })
               .expect('Content-Type', /html/)
-              .expect(201)
+              .expect(200)
               .end((err, res) => {
                 if (err) return done.fail(err);
 
@@ -206,10 +206,10 @@ describe('auth', () => {
               expect(agents.length).toEqual(0);
 
               request(app)
-                .post('/auth/introduce')
-                .send({ publicAddress: _publicAddress })
+                .get('/auth/introduce')
+                .query({ publicAddress: _publicAddress })
                 .expect('Content-Type', /html/)
-                .expect(201)
+                .expect(200)
                 .end((err, res) => {
                   if (err) return done.fail(err);
 
@@ -235,8 +235,8 @@ describe('auth', () => {
 
         beforeEach(done => {
           request(app)
-            .post('/auth/introduce')
-            .send({ publicAddress: _publicAddress })
+            .get('/auth/introduce')
+            .query({ publicAddress: _publicAddress })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(201)
@@ -250,8 +250,8 @@ describe('auth', () => {
 
           it('returns a public address and message with nonce for signing', done => {
             request(app)
-              .post('/auth/introduce')
-              .send({ publicAddress: _publicAddress })
+              .get('/auth/introduce')
+              .query({ publicAddress: _publicAddress })
               .set('Accept', 'application/json')
               .expect('Content-Type', /json/)
               .expect(201)
@@ -274,8 +274,8 @@ describe('auth', () => {
               const nonce = agents[0].nonce;
 
               request(app)
-                .post('/auth/introduce')
-                .send({ publicAddress: _publicAddress })
+                .get('/auth/introduce')
+                .query({ publicAddress: _publicAddress })
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
                 .expect(201)
@@ -305,10 +305,10 @@ describe('auth', () => {
 
           it('renders an instruction page with form-embedded public address', done => {
             request(app)
-              .post('/auth/introduce')
-              .send({ publicAddress: _publicAddress })
+              .get('/auth/introduce')
+              .query({ publicAddress: _publicAddress })
               .expect('Content-Type', /html/)
-              .expect(201)
+              .expect(200)
               .end((err, res) => {
                 if (err) return done.fail(err);
 
@@ -327,10 +327,10 @@ describe('auth', () => {
               const nonce = agents[0].nonce;
 
               request(app)
-                .post('/auth/introduce')
-                .send({ publicAddress: _publicAddress })
+                .get('/auth/introduce')
+                .query({ publicAddress: _publicAddress })
                 .expect('Content-Type', /html/)
-                .expect(201)
+                .expect(200)
                 .end((err, res) => {
                   if (err) return done.fail(err);
 
@@ -361,8 +361,8 @@ describe('auth', () => {
         beforeEach(done => {
           session = request(app);
           session
-            .post('/auth/introduce')
-            .send({ publicAddress: _publicAddress })
+            .get('/auth/introduce')
+            .query({ publicAddress: _publicAddress })
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(201)
@@ -632,8 +632,8 @@ describe('auth', () => {
 
           it('returns an error', done => {
             request(app)
-              .post('/auth/introduce')
-              .send({ publicAddress: 'invalid ethereum address' })
+              .get('/auth/introduce')
+              .query({ publicAddress: 'invalid ethereum address' })
               .set('Content-Type', 'application/json')
               .set('Accept', 'application/json')
               .expect('Content-Type', /json/)
@@ -650,8 +650,8 @@ describe('auth', () => {
               expect(agents.length).toEqual(0);
 
               request(app)
-                .post('/auth/introduce')
-                .send({ publicAddress: 'invalid ethereum address' })
+                .get('/auth/introduce')
+                .query({ publicAddress: 'invalid ethereum address' })
                 .set('Content-Type', 'application/json')
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /json/)
@@ -684,8 +684,8 @@ describe('auth', () => {
           it('redirects', done => {
             session = request(app)
             session
-              .post('/auth/introduce')
-              .send({ publicAddress: 'invalid ethereum address' })
+              .get('/auth/introduce')
+              .query({ publicAddress: 'invalid ethereum address' })
               .expect(302)
               .end((err, res) => {
                 if (err) return done.fail(err);
@@ -708,8 +708,8 @@ describe('auth', () => {
               expect(agents.length).toEqual(0);
 
               request(app)
-                .post('/auth/introduce')
-                .send({ publicAddress: 'invalid ethereum address' })
+                .get('/auth/introduce')
+                .query({ publicAddress: 'invalid ethereum address' })
                 .expect(302)
                 .end((err, res) => {
                   if (err) return done.fail(err);
@@ -738,8 +738,8 @@ describe('auth', () => {
     beforeEach(done => {
       session = request(app);
       session
-        .post('/auth/introduce')
-        .send({ publicAddress: _publicAddress })
+        .get('/auth/introduce')
+        .query({ publicAddress: _publicAddress })
         .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
         .expect(201)

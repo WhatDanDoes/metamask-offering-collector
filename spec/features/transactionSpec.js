@@ -31,8 +31,8 @@ describe('transactions', () => {
       beforeEach(done => {
         session = request(app);
         session
-          .post('/auth/introduce')
-          .send({ publicAddress: _publicAddress })
+          .get('/auth/introduce')
+          .query({ publicAddress: _publicAddress })
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(201)
@@ -254,8 +254,8 @@ describe('transactions', () => {
       beforeEach(done => {
         session = request(app);
         session
-          .post('/auth/introduce')
-          .send({ publicAddress: _publicAddress })
+          .get('/auth/introduce')
+          .query({ publicAddress: _publicAddress })
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .expect(201)

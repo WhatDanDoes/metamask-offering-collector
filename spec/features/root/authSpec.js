@@ -46,8 +46,8 @@ describe('root auth', () => {
       beforeEach(done => {
         session = request(app);
         session
-          .post('/auth/introduce')
-          .send({ publicAddress: _publicAddress })
+          .get('/auth/introduce')
+          .query({ publicAddress: _publicAddress })
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
           .end((err, res) => {
