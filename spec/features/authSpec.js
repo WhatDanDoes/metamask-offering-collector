@@ -439,13 +439,13 @@ describe('auth', () => {
 
           describe('browser', () => {
 
-            it('returns a redirect to home with message', done => {
+            it('returns a redirect to the transfer app with a message', done => {
               session
                 .post('/auth/prove')
                 .set('Content-Type', 'application/json')
                 .send({ publicAddress: _publicAddress, signature: signed })
                 .expect(302)
-                .expect('Location', /\/$/)
+                .expect('Location', /\/transfer$/)
                 .end((err, res) => {
                   if (err) return done.fail(err);
 
@@ -474,7 +474,7 @@ describe('auth', () => {
                   .set('Accept', 'text/html')
                   .send({ publicAddress: _publicAddress, signature: signed })
                   .expect(302)
-                  .expect('Location', /\/$/)
+                  .expect('Location', /\/transfer$/)
                   .end((err, res) => {
                     if (err) return done.fail(err);
 
