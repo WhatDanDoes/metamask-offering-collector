@@ -93,7 +93,7 @@
             Yes, please do. You'll need to learn a bit about <a>Metamask</a>.
             Don't worry, it's easy. This app will try to teach a bit too. After
             you've installed Metamask,
-            <form id="introduction-form-bottom" action="/auth/introduce" method="post" onsubmit="return handleIdentification(event)">
+            <form id="introduction-form-bottom" action="/auth/introduce" method="get" onsubmit="return handleIdentification(event)">
               <input type="hidden" name="publicAddress">
               <button class="connect-metamask-button" type="submit">Confirm your identity</button>
             </form>
