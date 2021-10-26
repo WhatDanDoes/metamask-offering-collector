@@ -13,7 +13,7 @@ context('transaction view', () => {
 
   it('displays links to account and donate pages', () => {
     cy.visit('/transaction');
-    cy.get('header p a[href="/"] i').contains('Donate');
+    cy.get('header p a[href="/transfer"] i').contains('Donate');
     cy.get('header p a[href="/account"] i').contains('Account');
   });
 

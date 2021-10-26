@@ -95,7 +95,7 @@ context('authentication', () => {
       });
 
       it('lands in the right place', () => {
-        cy.url().should('match', /\/$/);
+        cy.url().should('match', /\/transfer$/);
       });
 
       it('does not display the login link', () => {
