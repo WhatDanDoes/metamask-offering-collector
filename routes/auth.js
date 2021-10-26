@@ -47,8 +47,10 @@ function getSigningMessage(nonce, done) {
 /**
  * The agent has introduced himself, create and return nonce message for signing
  */
-router.post('/introduce', (req, res) => {
-  models.Agent.findOne({ publicAddress: req.body.publicAddress }).then(agent => {
+//router.post('/introduce', (req, res) => {
+router.get('/introduce', (req, res) => {
+  //models.Agent.findOne({ publicAddress: req.body.publicAddress }).then(agent => {
+  models.Agent.findOne({ publicAddress: req.query.publicAddress }).then(agent => {
 
     if (agent) {
       const nonce = Math.floor(Math.random() * 1000000).toString();
@@ -63,7 +65,8 @@ router.post('/introduce', (req, res) => {
           }
           // 2021-10-4 https://gist.github.com/danschumann/ae0b5bdcf2e1cd1f4b61
           // You'd think stringifying JSON for this purpose would be simple....
-          res.status(201).render('sign', {
+          //res.status(201).render('sign', {
+          res.render('sign', {
             publicAddress: agent.publicAddress,
             typedData: JSON.stringify(message).replace(/\\/g, '\\\\').replace(/"/g, '\\\"'),
             messages: req.flash(),
@@ -76,15 +79,17 @@ router.post('/introduce', (req, res) => {
       });
     }
     else {
-      models.Agent.create({ publicAddress: req.body.publicAddress }).then(agent => {
+      //models.Agent.create({ publicAddress: req.body.publicAddress }).then(agent => {
+      models.Agent.create({ publicAddress: req.query.publicAddress }).then(agent => {
         getSigningMessage(agent.nonce, (err, message) => {
           if (err) return res.status(500).json({ message: err.message });
 
           if (req.headers['accept'] === 'application/json') {
             return res.status(201).json({ typedData: message, publicAddress: agent.publicAddress });
           }
-          res.status(201).render('sign', {
-            publicAddress: req.body.publicAddress,
+          res.render('sign', {
+            //publicAddress: req.body.publicAddress,
+            publicAddress: req.query.publicAddress,
             typedData: JSON.stringify(message).replace(/\\/g, '\\\\').replace(/"/g, '\\\"'),
             messages: req.flash(),
             messageText: message.message.message,
@@ -122,6 +127,7 @@ router.post('/introduce', (req, res) => {
  */
 router.post('/prove', (req, res) => {
   models.Agent.findOne({ publicAddress: req.body.publicAddress }).then(agent => {
+
     getSigningMessage(agent.nonce, (err, message) => {
       if (err) return res.status(500).json({ message: err.message });
 
