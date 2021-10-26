@@ -84,6 +84,37 @@ Had trouble with Synpress not reloading the wallet on each try. Had to manually 
 
 It would be nice if Synpress reset the wallet on open. Even pre-setting the _secret words_ on chain and on Synpress result in nonce misalignment when sending a transaction. Reset Synpress Metamask wallet manually on each new test/dev session. _Resetting_ in this case is not the same as an account recovery. Go into settings on the test wallet and reset it from there.
 
+# 2021-10-25
+
+Basic Android Studio stuff for mobile debugging found her: https://github.com/MetaMask/metamask-mobile
+
+Had to make a couple config changes:
+
+`/android/app/src/main/AndroidManifest.xml`
+
+```
+-               android:usesCleartextTraffic="${isDebug}"
++               android:usesCleartextTraffic="true
+```
+
+`/android/app/src/main/res/xml/react_native_config.xml`
+
+```
+-  <base-config cleartextTrafficPermitted="false" />
++  <base-config cleartextTrafficPermitted="true" />
+```
+
+Basic startup for debugging:
+
+```
+nvm use v14.16.1
+yarn watch # start build server
+yarn start:android
+```
+
+Inspect the Chrome output at: chrome://inspect/#devices
+
+
 # Production
 
 In the application directory:
