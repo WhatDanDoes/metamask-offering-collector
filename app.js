@@ -6,10 +6,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 const accountRouter = require('./routes/account');
 const transactionRouter = require('./routes/transaction');
 const authRouter = require('./routes/auth');
+const transferRouter = require('./routes/transfer');
 
 var app = express();
 
@@ -67,6 +68,13 @@ app.use(session(sessionConfig));
  */
 const models = require('./models');
 app.use((req, res, next) => {
+
+  // 2021-10-16
+  // Metamask is doing this twice... 302 then 304 response
+  // Only the second response has a cookie set. Why?
+  console.log('SESSION CHECK');
+  console.log(req.session);
+
   if (!req.session.agent_id) {
     return next();
   }
@@ -91,6 +99,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/account', accountRouter);
 app.use('/transaction', transactionRouter);
+app.use('/transfer', transferRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

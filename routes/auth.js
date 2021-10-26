@@ -123,7 +123,6 @@ router.get('/introduce', (req, res) => {
 
 /**
  * Takes signed message and verifies signatures
- *
  */
 router.post('/prove', (req, res) => {
   models.Agent.findOne({ publicAddress: req.body.publicAddress }).then(agent => {
@@ -148,7 +147,7 @@ router.post('/prove', (req, res) => {
           }
 
           req.flash('success', 'Welcome!');
-          res.redirect('/');
+          res.redirect('/transfer');
         });
       }
       else {

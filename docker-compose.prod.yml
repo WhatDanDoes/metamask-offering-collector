@@ -5,9 +5,9 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
-      - VIRTUAL_HOST=example.com
-      - LETSENCRYPT_HOST=example.com
-      - LETSENCRYPT_EMAIL=daniel@example.com
+      - VIRTUAL_HOST=tithe.whatdandoes.info
+      - LETSENCRYPT_HOST=tithe.whatdandoes.info
+      - LETSENCRYPT_EMAIL=daniel@capitolhill.ca
     volumes:
       - .:/home/node
       - /home/node/node_modules
